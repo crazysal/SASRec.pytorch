@@ -36,13 +36,16 @@ f.close()
 
 if __name__ == '__main__':
 
-    u2i_index, i2u_index = build_index(args.dataset)
-    
-    # global dataset
-    dataset = data_partition(args.dataset)
+    # u2i_index, i2u_index = build_index(args.dataset)
+    u2i_index, i2u_index, usernum, itemnum = build_index(args.dataset)
+    user_train, user_valid, user_test, usernum, itemnum = data_partition(args.dataset)
 
-    [user_train, user_valid, user_test, usernum, itemnum] = dataset
+    # global dataset
+    # dataset = data_partition(args.dataset)
+    # [user_train, user_valid, user_test, usernum, itemnum] = dataset
     # num_batch = len(user_train) // args.batch_size # tail? + ((len(user_train) % args.batch_size) != 0)
+
+
     num_batch = (len(user_train) - 1) // args.batch_size + 1
     cc = 0.0
     for u in user_train:
